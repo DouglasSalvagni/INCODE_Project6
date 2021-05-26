@@ -14,8 +14,8 @@
                 </li>
             
                 <li class="nav-item status">
-                    <a class="nav-link active text-light" aria-current="page" href="<%= user ? "/logout" : "/login"%>">
-                        <%= user ? "Sign out" : "Login" %> 
+                    <a class="nav-link active text-light" aria-current="page" href="<%= loggedUser ? "/logout" : "/login"%>">
+                        <%= loggedUser ? "Sign out" : "Login" %> 
                     </a>
                 </li>
             </ul>

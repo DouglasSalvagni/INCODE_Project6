@@ -4,6 +4,12 @@ const bcrypt = require('bcryptjs');
 const { loginValidation } = require('../utils/validation');
 
 router.get("/", (req, res) => {
+    const loggedUser = req.session.user ? req.session.user : false
+
+    //if user is logged redirect to home page
+    if(loggedUser) return res.redirect('/');
+
+    //if it is not logged, then send to login page
     res.render('login',{message:"", toast: false, email: ""});
 });
 
