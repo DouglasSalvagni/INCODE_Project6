@@ -1,0 +1,174 @@
+<%- include('../partials/head', {titleName: "Home page"}) %>
+<body class="position-relative">
+
+  <%- include('../partials/header', {title:"Location"}) %> 
+
+  <div class="container">
+
+      <main class="mt-5">
+
+        <% if (location) { %>
+         
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <img src="https://images.unsplash.com/photo-1548588627-f978862b85e1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW9udGFpbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" class="card-img-bottom" alt="...">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-12 col-sm-6">
+                          <div class="d-grid gap-2">
+                              <button class="btn btn-primary">Like -  26</button>
+                          </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                          <div class="d-grid gap-2">
+                              <button class="btn btn-secondary">Unlike - 2</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-body">
+                  <div class="input-group mb-3">
+                      <input id="commentInput" type="text" class="form-control" <%- true ? '' : 'disabled' %>  placeholder="Leave a comment" aria-label="Recipient's username" aria-describedby="button-addon2">
+
+                      <button onclick="postComment('<%=location._id%>','<%= loggedUser._id%>')" id="commenttBtn" class="btn btn-outline-secondary" <%- true ? '' : 'disabled' %> type="button" id="button-addon2">
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                        Comment
+                      </button>
+
+
+                      <div id="validationServer03Feedback" class="invalid-feedback">
+                        Please provide a comment.
+                      </div>
+                  </div>
+              </div>
+              <div class="card-body">
+
+                <ul id="commentsList" class="list-unstyled">
+                  <% comments.forEach(element => { %>
+                    
+                      <li class="mb-2 bg-light rounded p-3 ps-5 border-start border-warning border-5">
+                        <a href="/profile/<%= element.authorId %> " class="fw-bolder text-decoration-none link-dark text-capitalize"><%= element.author %></a>
+                        <p class="small mt-2"><%= element.comment %></p>
+                      </li>
+
+                  <% }) %>
+                </ul>
+
+              </div>
+          </div>
+
+        <% } %>
+    
+      </main>
+
+  </div>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <!-- Then put toasts within -->
+    <div id="message" class="toast bg-danger align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body text-white">
+              <%= message %> 
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+  </div>
+
+  <footer></footer>
+  <%- include('../partials/scripts') %>
+  <% if (location) { %>
+    <script>
+
+      //Cleaning validation warning when user make changes into input value
+      $('#commentInput').change(function(){
+        if($(this).val()) {
+          $(this).removeClass('is-invalid')
+        }
+      })
+
+      //Posting new comment
+      function postComment(locationId, loggedUserId) {
+        
+        //Get comment from input
+        const comment = $('#commentInput').val()
+
+        
+        //Check if comment value is empty
+        if(!comment) {
+          return $('#commentInput').addClass('is-invalid')
+        }
+        
+        //Disabled comment button untill servers return
+        $('#commenttBtn').prop('disabled', true);
+        
+        //Show spinner during request untill server return
+        $('#commenttBtn span').show();
+
+        //Body request
+        var newComment = {
+           locationId:locationId,
+           authorId: loggedUserId,
+           comment: comment
+        }
+
+        //fetching server to post comment
+        fetch('http://localhost:3000/location/comments', {
+  
+           method: 'post',
+           headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+           body: JSON.stringify(newComment)
+  
+        }).then(function(response) {
+  
+          //Parsing JSON text
+          return response.json();
+  
+        }).then(function(data) {
+
+          //Cleaning comments list to set new comments list
+          $('#commentsList').empty();
+
+          //Populating comments list
+          data.forEach(element => {
+            
+            $('#commentsList').append(`
+              <li class="mb-2 bg-light rounded p-3 ps-5 border-start border-warning border-5">
+                <a href="/profile/${element.authorId}" class="fw-bolder text-decoration-none link-dark text-capitalize">${element.author}</a>
+                <p class="small mt-2">${element.comment}</p>
+              </li>
+            `);
+
+          });
+
+          //Reset input value
+          $('#commentInput').val('')
+
+          //Reactiving disabled button
+          $('#commenttBtn').prop('disabled', false);
+
+          //Hidding spinner animation
+          $('#commenttBtn span').hide();
+
+        }).catch(function(err){
+
+          //Reactiving disabled button
+          $('#commenttBtn').prop('disabled', false);
+
+          //Hidding spinner animation
+          $('#commenttBtn span').hide();
+
+        })
+      }
+
+
+    </script>
+<% } %>
+<!--the include ends body -->
+<%- include('../partials/bottom') %> 

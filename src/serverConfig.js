@@ -12,6 +12,7 @@ const login = require('./routes/login');
 const logout = require('./routes/logout');
 const register = require('./routes/register');
 const page404 = require('./routes/404');
+const locationDetails = require('./routes/locationDetails');
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use('/', home);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/register', register);
+app.use('/location', locationDetails);
 
 app.use('*', page404);
 
