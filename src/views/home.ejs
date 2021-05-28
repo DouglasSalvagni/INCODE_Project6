@@ -1,12 +1,56 @@
  <%- include('../partials/head', {titleName: "Home page"}) %>
 <body>
-
-  <main>
-
-    <%- include('../partials/header', {title:"Home Page"}) %> 
-
+  <%- include('../partials/header', {title:"Home Page"}) %> 
+  <nav class="navbar navbar-light bg-light navbar-nav  mx-auto">
+    <ul class="nav">
+     <li class="nav-item">
+        <form class="d-flex searchForm">
+        <div class="row">
+          <div class="col col-7">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search"  name="search" id="search"
+            />
+          </div>
+          <div class="col col-1">
+            <button class="btn btn-outline-success" id="go" type="submit"> GO </button>
+          </div>
+        </div>
+        </form>
+      </li>
+      <li>
+        <a class="nav-link active text-dark" aria-current="page" href="<%= loggedUser ? "/addLocation": "" %>">
+          <%= loggedUser ? "Add location" : "" %> 
+      </a>
+      </li>
+    </ul>
+  </nav>
+  <main class="container pt-5" id="locationsContainer">
+    <div class="block">
+        <div class="row">
+          <% locations.forEach(function(image) { %>
+          <div class="span4">
+            <img class="img-left img-thumbnail" src="<%=image.img %>" alt="...">
+            <!-- <img class="img-left img-thumbnail" src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg"/> -->
+            <div class="content-heading">
+              <h5 id="image-name">
+                <a href="/location/<%=image.ID%> "><%= image.name%></a>
+              </h5>
+            </div>
+              <p id="image-description">
+                <%= image.desc %>
+              </p>
+              <p id="comments">
+                <%= image.totalComments%>
+              </p>
+              <p id="likes">
+                <%= image.totalLikes%>
+              </p>
+            </div>
+ 
+      <% }) %>
+      <br><hr>
+    </div>
+  </div>  
   </main>
-
   <footer></footer>
   <%- include('../partials/scripts') %>
 <!--the include ends body -->

@@ -1,0 +1,84 @@
+ <%- include('../partials/head', {titleName: "Home page"}) %>
+<body>
+  <%- include('../partials/header', {title:"Home Page"}) %> 
+  <nav class="navbar navbar-light bg-light navbar-nav mx-auto">
+    <ul class="nav">
+     <li class="nav-item">
+        <form class="d-flex searchForm">
+        <div class="row">
+          <div class="col col-7">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search"  name="search" id="search"
+            />
+          </div>
+          <div class="col col-1">
+            <button class="btn btn-outline-success" id="go" type="submit"> GO </button>
+          </div>
+        </div>
+        </form>
+      </li>
+    </ul>
+  </nav>
+  <!-- <main class="container pt-5" id="locationsContainer">
+    <div class="row">
+      <% locations.map((loc)=> { %>
+      <div class="col">
+        <div class="thumbnail">
+          <a href="<%= loc.img %>" target="_blank">
+            <img src="<%= loc.img %>" alt="...">
+            <div>
+              <h5 id="loc-name">
+                <a href="/location/<%=loc.locatID%> "><%= loc.name%></a>
+              </h5>
+              <p id="loc-description">
+                <%= loc.description %>
+              </p>
+              <p id="comments">
+                <%= loc.totalComments%>
+              </p>
+              <p id="likes">
+                <%= loc.totalLikes%>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+ 
+      <% }) %>
+    </div>
+  </main> -->
+
+  <main class="container pt-5" id="locationsContainer">
+    <div class="row">
+      <% locations.map((loc)=> { %>
+      <div class="col">
+        <div class="thumbnail">
+          <a href="<%= loc.img %>" target="_blank">
+            <div class="span4">
+            <img class="img-left" src="<%= loc.img %>" alt="...">
+            <div class="content-heading">
+              <h5 id="loc-name">
+                <a href="/location/<%=loc.locatID%> "><%= loc.name%></a>
+              </h5>
+            </div>
+              <p id="loc-description">
+                <%= loc.description %>
+              </p>
+              <p id="comments">
+                <%= loc.totalComments%>
+              </p>
+              <p id="likes">
+                <%= loc.totalLikes%>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+ 
+      <% }) %>
+      <br><hr>
+    </div>
+  </main>
+  <footer></footer>
+  <%- include('../partials/scripts') %>
+<!--the include ends body -->
+<%- include('../partials/bottom') %> 
