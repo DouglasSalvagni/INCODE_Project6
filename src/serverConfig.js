@@ -2,7 +2,6 @@ const express = require('express');
 var expressSession = require('express-session');
 const dotenv = require('dotenv');
 const mangoose = require('mongoose');
-var multiparty = require('connect-multiparty');
 
 var path = require('path');
 
@@ -47,7 +46,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(multiparty());
 
 //Set static public folder
 app.use(express.static(__dirname + '/public'));

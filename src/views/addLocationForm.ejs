@@ -1,6 +1,9 @@
 <%- include('../partials/head', {titleName: "Add Location"}) %>
 <body class="h-100 bg-primary position-relative">
   <main class="container-fluid h-100 pt-5">
+    <div>
+      <button class="btn btn-primary hBack" type="button"><b>Back</b></button>
+    </div>
     <div class="d-flex justify-content-center align-items-center h-100">
       <div class="card" style="width: 25rem;">
         <div class="card-body">
@@ -23,7 +26,7 @@
             <div class="mb-3">
               <label class="form-label">Description</label>
               <input
-                type="textarea"
+                type="text"
                 class="form-control"
                 name="description"
                 required
@@ -39,6 +42,9 @@
                 class="btn btn-primary btn-block"
                 value="Upload"
               />
+              <a href="/" id="cancel" name="cancel" class="btn btn-secondary"
+                >Cancel</a
+              >
             </div>
           </form>
         </div>
