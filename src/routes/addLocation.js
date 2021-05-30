@@ -14,16 +14,27 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname))
     }
 });
- 
-var upload = multer({ storage: storage, fileFilter: imgVal.imageFilter });
 
 router.get('/', (req, res) => {
   res.render('addLocationForm', { message: '', toast: false })
 })
 
+router.post('/', function (req, res)  {
+    let upload = multer({ storage: storage, fileFilter: imgVal.imageFilter }).single('uploaded_file');
 
-router.post('/', upload.single('uploaded_file'),function (req, res)  {
-   
+    upload(req, res, function(err) {
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(err);
+        }
+        else if (err) {
+            return res.send(err);
+        }  
     var obj = {
         img: {
             filePath: '/images/uploads/' + req.file.filename,
@@ -46,6 +57,7 @@ router.post('/', upload.single('uploaded_file'),function (req, res)  {
    
         }
     })
+})
 })
 
 module.exports = router

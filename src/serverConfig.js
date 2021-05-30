@@ -15,6 +15,7 @@ const register = require('./routes/register');
 const addLocation = require('./routes/addLocation');
 const page404 = require('./routes/404');
 const locationDetails = require('./routes/locationDetails');
+const search =require('./routes/search');
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ app.use('/logout', logout);
 app.use('/register', register);
 app.use('/addLocation', addLocation);
 app.use('/location', locationDetails);
+app.use('/search', search);
 
 app.use('*', page404);
 
