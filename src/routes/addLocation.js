@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
 router.post('/', upload.single('uploaded_file'),function (req, res)  {
    
     var obj = {
+        userId: req.session.user._id,
         img: {
             filePath: '/images/uploads/' + req.file.filename,
             contentType: req.file.mimetype
@@ -41,7 +42,7 @@ router.post('/', upload.single('uploaded_file'),function (req, res)  {
             console.log(err);
         }
         else {
-            // item.save();
+            item.save();
             res.render('addLocationForm', {message:"successfully uploaded",toast:true})
    
         }

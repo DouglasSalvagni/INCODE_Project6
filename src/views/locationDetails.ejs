@@ -11,20 +11,29 @@
          
           <div class="card">
               <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <h5 class="card-title"><%= location.name %></h5>
+                  <p class="card-text"><%= location.desc %></p>
               </div>
-              <img src="https://images.unsplash.com/photo-1548588627-f978862b85e1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW9udGFpbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" class="card-img-bottom" alt="...">
-              <div class="card-body">
+              <img class="mb-3" src="<%= location.img.filePath %>">
                   <div class="row">
                       <div class="col-12 col-sm-6">
                           <div class="d-grid gap-2">
-                              <button class="btn btn-primary">Like -  26</button>
+                              <button onclick="postInteraction('#likeBtn','<%=location._id%>','<%= loggedUser._id%>','1')" id="likeBtn" class="btn btn-primary <%- loggedUser ? '' : 'disabled' %>">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display: none;"></span>
+
+                                Like -  <%= likes.length %> 
+
+                              </button>
                           </div>
                       </div>
                       <div class="col-12 col-sm-6">
                           <div class="d-grid gap-2">
-                              <button class="btn btn-secondary">Unlike - 2</button>
+                              <button onclick="postInteraction('#unlikeBtn','<%=location._id%>','<%= loggedUser._id%>','0')" id="unlikeBtn" class="btn btn-secondary <%- loggedUser ? '' : 'disabled' %>">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display: none;"></span>
+
+                                Unlike - <%= unlikes.length %>
+
+                              </button>
                           </div>
                       </div>
                   </div>
@@ -95,7 +104,6 @@
         
         //Get comment from input
         const comment = $('#commentInput').val()
-
         
         //Check if comment value is empty
         if(!comment) {
@@ -116,7 +124,7 @@
         }
 
         //fetching server to post comment
-        fetch('http://localhost:3000/location/comments', {
+        fetch('http://localhost:3000/location/comments/' + locationId, {
   
            method: 'post',
            headers: {
@@ -167,6 +175,49 @@
         })
       }
 
+      function postInteraction(btnId, locationId, loggedUserId, option) {
+
+        //Body request
+        const interaction = {
+           authorId: loggedUserId,
+           interaction: option
+        }
+
+        //fetching server to interact
+        fetch('http://localhost:3000/location/interaction/' + locationId, {
+  
+           method: 'post',
+           headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+           body: JSON.stringify(interaction)
+  
+        }).then(function(response) {
+  
+          //Parsing JSON text
+          return response.json();
+  
+        }).then(function(data) {
+
+          if(data.error) {
+            return ''
+          }
+
+          //Cleaning like button text
+          $(btnId).empty();
+
+          //Add like button new score
+          if(option === '1') {
+              $(btnId).html(`Like - ${data.likes.length}`);
+          } else if(option === '0'){
+              $(btnId).html(`Unlike - ${data.unlikes.length}`);
+          }
+
+        }).catch(function(err){
+
+        })
+      }
 
     </script>
 <% } %>
