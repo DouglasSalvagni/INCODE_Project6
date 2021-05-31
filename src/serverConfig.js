@@ -57,9 +57,9 @@ app.use('/', home);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/register', register);
-app.use('/addLocation', addLocation);
 app.use('/location', locationDetails);
 app.use('/search', search);
+app.use('/addLocation', addLocation);
 
 app.use('*', page404);
 

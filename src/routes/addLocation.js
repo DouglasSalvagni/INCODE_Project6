@@ -36,6 +36,7 @@ router.post('/', function (req, res)  {
             return res.send(err);
         }  
     var obj = {
+        userId: req.session.user._id,
         img: {
             filePath: '/images/uploads/' + req.file.filename,
             contentType: req.file.mimetype
@@ -52,7 +53,7 @@ router.post('/', function (req, res)  {
             console.log(err);
         }
         else {
-            // item.save();
+            item.save();
             res.render('addLocationForm', {message:"successfully uploaded",toast:true})
    
         }

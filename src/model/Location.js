@@ -1,32 +1,40 @@
 const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
-    img:{
-         filePath: String,
-         contentType: String
-         },
+    userId: {
+        type: String,
+        required: true,
+    },
+    img: {
+        filePath: String,
+        contentType: String
+    },
     name: {
         type: String,
         required: true,
-        min: 6,
-        max: 255,  
-        index:true
     },
     desc: {
         type: String,
         required: true,
-        min: 6,
-        max: 255,
-        index:true
     },
-    approved:false,
-    totalComments: { 
-        type: String,
+    comments: [
+        { 
+            authorId: String,
+            author: String, 
+            comment: String 
+        }
+    ],
+    interactions: [
+        { 
+            authorId: String,
+            //Interaction pattern: "1" is like, "0" is unlike
+            interaction: String 
+        }
+    ],
+    approved: {
+        type: Boolean,
+        default: false
     },
-    totalLikes: {
-        type: String,
-    }
-   
 });
 
 locationSchema.index({ name : 1, desc : 1 })
