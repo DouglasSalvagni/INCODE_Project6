@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-const locationSchema = new mongoose.Schema({ 
+const locationSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true,
+    },
     img: {
         filePath: String,
         contentType: String
