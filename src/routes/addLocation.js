@@ -16,10 +16,16 @@ var storage = multer.diskStorage({
 });
 
 router.get('/', (req, res) => {
-  res.render('addLocationForm', { message: '', toast: false })
+    const loggedUser = req.session.user ? req.session.user : false
+    if(loggedUser)
+        res.render('addLocationForm', { message: '', toast: false, loggedUser: loggedUser})
+    else
+    res.redirect('/')
 })
 
 router.post('/', function (req, res)  {
+    const loggedUser = req.session.user ? req.session.user : false
+    if(loggedUser){
     let upload = multer({ storage: storage, fileFilter: imgVal.imageFilter }).single('uploaded_file');
 
     upload(req, res, function(err) {
@@ -44,8 +50,6 @@ router.post('/', function (req, res)  {
         name: req.body.locationName,
         desc: req.body.description,
         approved: false,
-        totalComments : '4',
-        totalLikes: '4'
     }
 
     Location.create(obj, (err, item) => {
@@ -54,11 +58,13 @@ router.post('/', function (req, res)  {
         }
         else {
             item.save();
-            res.render('addLocationForm', {message:"successfully uploaded",toast:true})
-   
+            res.render('addLocationForm', {message:"successfully uploaded",toast:true, loggedUser: loggedUser})
         }
     })
 })
+    }
+    else
+    res.render('addLocationForm', {message:"Your location has not been added. Please login to add location", toast:true, loggedUser: loggedUser})
 })
 
 module.exports = router

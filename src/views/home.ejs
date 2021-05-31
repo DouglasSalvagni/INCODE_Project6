@@ -40,10 +40,10 @@
                 <%= image.desc %>
               </p>
               <p id="comments"> Comments:
-                <%= image.totalComments%>
+                <%= image.comments.length%>
               </p>
               <p id="likes"> Likes:
-                <%= image.totalLikes%>
+                <%= image.interactions.filter(function(ele){ return ele.interaction == '1';}).length  %>
               </p>
             </div>
           </div>

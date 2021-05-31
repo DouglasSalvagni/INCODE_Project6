@@ -37,6 +37,6 @@ const locationSchema = new mongoose.Schema({
     },
 });
 
-locationSchema.index({ name : 1, desc : 1 })
+locationSchema.index({ name: 'text', desc : 'text' })
 
 module.exports = new mongoose.model('Location', locationSchema);
