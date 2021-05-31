@@ -5,3 +5,25 @@
     float: left;
 }
 
+.col-lg-2.col-md-3.col-sm-4.col-xs-12
+{
+    padding: 0 your desired padding/2;
+}
+.details p{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: small;
+    text-align: center;
+}
+
+h6{ text-align: center;}
+
+.rt-links{
+    display:flex;
+    width:20%;
+    float:right
+}
+
+.thumbnail img {
+    height:350px;
+    width:100%;
+}

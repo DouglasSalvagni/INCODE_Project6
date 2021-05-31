@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 
-const locationSchema = new mongoose.Schema({
+const locationSchema = new mongoose.Schema({ 
+    img:
+    {
+        filePath: String,
+        contentType: String
+    },
     name: String,
     desc: String,
     approved: false,
-    img:
-    {
-        data: String,
-        contentType: String
-    }
+    totalComments: String,
+    totalLikes: String
 });
  
  
