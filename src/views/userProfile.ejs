@@ -1,0 +1,91 @@
+<%- include('../partials/head', {titleName: "Profile"}) %>
+<body class="h-100 bg-primary position-relative">
+
+    <main class="container-fluid h-100 pt-5">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="card" style="width: 25rem;">
+                <div class="card-body">
+
+                    <h2 class="text-center mb-4">Profile Settings</h2>
+                    <form action="/userProfile" method="POST">
+                        <div class="mb-3">
+                          <label  class="form-label">First name</label>
+                          <input type="text" class="form-control" name="firstName" 
+                          value="<%= user.firstName %>" disabled> 
+                        </div>
+                        <div class="mb-3">
+                          <label  class="form-label">Surname</label>
+                          <input type="text" class="form-control" name="surName" 
+                          value="<%= user.surName %>" disabled> 
+                        </div>
+                        <div class="mb-3">
+                          <label  class="form-label">Email address</label>
+                          <input type="email" class="form-control" name="email" 
+                          value="<%= user.email %>" disabled>
+                        </div>
+                        <div class="mb-5">
+                          <label class="form-label">Current Password</label>
+                          <input type="password" class="form-control" name="password"  value="****" required>
+                          <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editPopup">
+                            Change Password
+                          </button>
+                        </div>
+                        <!-- Edit MODAL -->
+                        <div class="modal fade" id="editPopup" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="editModalLabel">Change Password</h5>
+                                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                                <label class="form-label">New Password</label>
+                                                <input type="password" class="form-control" name="password" required>
+                                        </div>
+                                        <div class="form-group">
+                                                <label class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" name="password" required>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                         <div class="d-grid gap-2">
+                          <a href="/" id="cancel" name="cancel" class="btn btn-secondary"
+                          >Cancel</a>
+                        </div>
+
+                      </form>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast-container position-absolute top-0 end-0 p-3">
+        <!-- Then put toasts within -->
+        <div id="message" class="toast bg-danger align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body text-white">
+                <%= message %> 
+              </div>
+              <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+    </footer>
+    <%- include('../partials/scripts') %> 
+<!--the include ends body -->
+<%- include('../partials/bottom') %> 
