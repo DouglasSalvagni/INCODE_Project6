@@ -1,12 +1,13 @@
 <%- include('../partials/head', {titleName: "Profile"}) %>
-<body class="h-100 bg-primary position-relative">
-
+<body class="h-100 position-relative">
+  <%- include('../partials/header', {title:"Profile"}) %> 
     <main class="container-fluid h-100 pt-5">
         <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="card" style="width: 25rem;">
+            <div class="card" style="width: 35rem;">
+              <div class="card-header">
+                Profile Settings
+              </div>
                 <div class="card-body">
-
-                    <h2 class="text-center mb-4">Profile Settings</h2>
                     <form action="/userProfile" method="POST">
                         <div class="mb-3">
                           <label  class="form-label">First name</label>
@@ -26,6 +27,7 @@
                         <div class="mb-5">
                           <label class="form-label">Current Password</label>
                           <input type="password" class="form-control" name="password"  value="****" required>
+                          <br>
                           <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editPopup">
                             Change Password
                           </button>
@@ -59,17 +61,11 @@
                               </div>
                             </div>
                           </div>
-
-                         <div class="d-grid gap-2">
-                          <a href="/" id="cancel" name="cancel" class="btn btn-secondary"
-                          >Cancel</a>
-                        </div>
-
                       </form>
-                    
                 </div>
             </div>
         </div>
+        <hr>
     </main>
 
     <div class="toast-container position-absolute top-0 end-0 p-3">
