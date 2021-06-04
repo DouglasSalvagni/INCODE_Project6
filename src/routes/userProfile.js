@@ -22,7 +22,7 @@ if(loggedUser){
     
 }
 else{
-    console.log("User session is not active")
+    console.log("User is not loggedin")
     res.redirect('/'); 
 }
 })
